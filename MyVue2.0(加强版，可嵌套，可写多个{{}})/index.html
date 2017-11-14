@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue的双向绑定</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="text1" style="display: block">
+    <div>
+        {{ text3 }}
+        <div>
+            {{ text4 }}
+            <div>
+                <input type="text" v-model="text3">
+                <div><input type="text" v-model="text5"> {{ text5 }}</div>
+            </div>
+        </div>
+    </div>
+    <input type="text" v-model="text2" style="display: block">
+    {{ text1 }} {{ text2 }} {{ text3 }} {{ text4 }} {{ text5 }}
+
+</div>
+<!--调度中心-->
+<script src="center.js"></script>
+ <!--添加set和get-->
+<script src="addGetSet.js"></script>
+<!--编译-->
+<script src="compile.js"></script>
+<!--订阅者，更新视图-->
+<script src="render.js"></script>
+
+<script>
+    var vm = new MyVue({
+        el:'#app',
+        data:{
+            text1:'我是text1',
+            text2:'我是text2',
+            text3:'我是text3',
+            text4:'我是text4',
+            text5:'我是text5'
+        }
+    });
+    function MyVue(options) {
+        this.el = options.el.substr(1);
+        this.data = options.data;
+        addGetSet(this.data);
+        //Dom遍历
+        var finalele = nodeToFragment( document.getElementById( this.el ),this );
+        document.getElementById(this.el).appendChild(finalele);
+    }
+
+</script>
+</body>
+</html>
