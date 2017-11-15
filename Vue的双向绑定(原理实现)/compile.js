@@ -10,8 +10,9 @@ function nodeToFragment(app,vue) {
 }
 
 function compile(node,vue) {
+    //当nodeType === 1的时候，该节点为input，div这样的元素节点，带有属性值。
     if(node.nodeType === 1) {
-        //获取所有属性
+        //获取该节点的所有属性
         let attrs = node.attributes;
         for(let i=0;i<attrs.length;i++) {
             if( attrs[i].nodeName === 'v-model' ) {
@@ -25,21 +26,17 @@ function compile(node,vue) {
             }
         }
     }
-    //文本节点
+    //当nodeType === 3的时候为纯文本节点，比如'     {{ text1 }}'
     if( node.nodeType === 3 ) {
         let text = node.nodeValue;
-        let reg = /\{\{.*?\}\}/g;
-        if( (result= reg.exec(text)) !== null ) {
-            let dataName = getDataName(result[0]);
-            new Render(node,vue,dataName);
+        let reg = /\{\{(.*?)\}\}/g;
+        if( (result= reg.test(text)) !== null ) {
+            let name =  RegExp.$1.trim();
+            new Render(node,vue,name);
         }
     }
-    function getDataName(txt){
-        var reg2 = /\{\{(.*?)\}\}/;
-        reg2.test(txt);
-        return RegExp.$1.trim();
-    }
 }
+
 
 
 
