@@ -7,19 +7,20 @@
 <body>
 <div id="app">
     <input type="text" v-model="text1" style="display: block">
+    {{ text1 }}
     <div>
-        {{ text3 }}
+        <input type="text" v-model="text2" style="display: block">
+        {{ text2 }}
         <div>
-            {{ text4 }}
+            <input type="text" v-model="text3" style="display: block">
+            {{ text3 }}
             <div>
-                <input type="text" v-model="text3">
-                <div><input type="text" v-model="text5"> {{ text5 }}</div>
+                <input type="text" v-model="text4">
+                {{ text4 }}
             </div>
         </div>
     </div>
-    <input type="text" v-model="text2" style="display: block">
-    {{ text1 }} {{ text2 }} {{ text3 }} {{ text4 }} {{ text5 }}
-
+    {{ text1 }} {{ text2 }} {{ text3 }} {{ text4 }}
 </div>
 <!--调度中心-->
 <script src="center.js"></script>
@@ -46,7 +47,7 @@
         this.data = options.data;
         addGetSet(this.data);
         //Dom遍历
-        var finalele = nodeToFragment( document.getElementById( this.el ),this );
+        var finalele = nodeToCompile( document.getElementById( this.el ),this );
         document.getElementById(this.el).appendChild(finalele);
     }
 

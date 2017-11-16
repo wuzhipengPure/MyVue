@@ -1,8 +1,9 @@
-function nodeToFragment(app,vue) {
+function nodeToCompile(app,vue) {
     var fetchDOM = document.createDocumentFragment();
     var child;
     while ( child = app.firstChild ) {
         // console.log(child,child.nodeType );
+        //拿到一个dom节点，就进行compile一次
         compile( child,vue );
         fetchDOM.appendChild(child);
     }
@@ -17,9 +18,10 @@ function compile(node,vue) {
         for(let i=0;i<attrs.length;i++) {
             if( attrs[i].nodeName === 'v-model' ) {
                 let name = attrs[i].nodeValue;
+                //新建一个订阅者对象，表示它是一个订阅者（这里实现了Model => View，具体之后说明哟）!!!
                 new Render(node,vue,name);
+                //我们键入键盘的时候，实时赋值给vue.data(这里实现了View => Model) !!!
                 node.oninput = function (e) {
-                    // console.log('敲了键盘');
                     let newValue = e.target.value;
                     vue.data[name] = newValue;
                 }
@@ -32,6 +34,7 @@ function compile(node,vue) {
         let reg = /\{\{(.*?)\}\}/g;
         if( (result= reg.test(text)) !== null ) {
             let name =  RegExp.$1.trim();
+            //新建一个订阅者，比如{{ text1 }}订阅了text1这个数据（这里实现了Model => View，具体之后说明哟）
             new Render(node,vue,name);
         }
     }

@@ -8,8 +8,6 @@
 <div id="app">
     <input type="text" v-model="text1" style="display: block">
     {{text1}}
-    <input type="text" v-model="text2" style="display: block">
-    {{text2}}
 </div>
 <!--调度中心-->
 <script src="center.js"></script>
@@ -19,7 +17,6 @@
 <script src="compile.js"></script>
 <!--订阅者,更新视图-->
 <script src="render.js"></script>
-
 <script>
     var vm = new MyVue({
         el:'#app',
@@ -34,7 +31,7 @@
         //数据劫持
         addGetSet(this.data);
         //Dom遍历
-        var finalele = nodeToFragment( document.getElementById( this.el ),this );
+        var finalele = nodeToCompile( document.getElementById( this.el ),this );
         document.getElementById(this.el).appendChild(finalele);
     }
 </script>

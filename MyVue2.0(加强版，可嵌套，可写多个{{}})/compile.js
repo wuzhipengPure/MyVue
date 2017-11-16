@@ -1,10 +1,10 @@
-function nodeToFragment(app,vue) {
+function nodeToCompile(app,vue) {
     var fetchDOM = document.createDocumentFragment();
     var child;
     while ( child = app.firstChild ) {
         compile( child,vue );
         // 递归调用
-        var finalele = nodeToFragment(child,vue);
+        var finalele = nodeToCompile(child,vue);
         if( child.nodeType === 1 ) {
             child.appendChild(finalele);
         };

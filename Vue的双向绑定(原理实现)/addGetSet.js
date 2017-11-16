@@ -26,7 +26,7 @@ function addGetSet(obj) {
                 console.log('数据更新啦 ', value, '=>', newVal);
                 value = newVal;
                 console.log(center.renders);
-                // 调度中心通知所有订阅者
+                // 数据更新了，调度中心通知所有订阅者
                 center.notify();
             }
         });
